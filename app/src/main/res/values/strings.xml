@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">비스켓</string>
-    <string name="map_button_name">지도</string>
-    <string name="business_card_button_name">명함</string>
+    <string name="app_name">Bisket</string>
+    <string name="map_menu_name">지도</string>
+    <string name="business_card_menu_name">명함</string>
 </resources>

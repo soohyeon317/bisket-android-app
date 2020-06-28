@@ -8,30 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/map_button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#610101"
-            android:text="@string/map_button_name" />
-
-        <Button
-            android:id="@+id/business_card_button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#610101"
-            android:text="@string/business_card_button_name" />
-    </LinearLayout>
-
     <fragment
         android:id="@+id/map"
         android:name="com.naver.maps.map.MapFragment"

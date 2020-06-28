@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/map_menu"
+        android:title="@string/map_menu_name" />
+    <item
+        android:id="@+id/business_card_menu"
+        android:title="@string/business_card_menu_name" />
+</menu>
