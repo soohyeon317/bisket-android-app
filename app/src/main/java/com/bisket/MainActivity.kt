@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
          * ActionBar 설정
          */
         val actionBar = supportActionBar!!
-        actionBar.setTitle("비스켓")
+        actionBar.setTitle(R.string.app_name)
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setBackgroundDrawable(ColorDrawable(0xFF8B0000.toInt()))
 
