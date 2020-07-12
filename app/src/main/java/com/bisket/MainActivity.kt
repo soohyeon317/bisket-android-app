@@ -4,14 +4,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bisket.fragments.BusinessCardFragment
 import com.bisket.fragments.MainFragment
 import com.bisket.fragments.MapFragment
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,6 +58,11 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.map_menu -> {
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, MapFragment::class.qualifiedName!!))
+                val naverMapFragment = supportFragmentManager.findFragmentById(R.id.map) as com.naver.maps.map.MapFragment?
+                    ?: com.naver.maps.map.MapFragment.newInstance().also {
+                        supportFragmentManager.beginTransaction().add(R.id.map, it).commit()
+                    }
+                naverMapFragment.getMapAsync(this)
             }
             R.id.business_card_menu -> {
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, BusinessCardFragment::class.qualifiedName!!))
@@ -60,5 +70,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        val marker = Marker()
+        marker.position = LatLng(37.5670135, 126.9783740)
+        marker.map = naverMap
     }
 }
