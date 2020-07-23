@@ -4,18 +4,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bisket.fragments.BusinessCardFragment
 import com.bisket.fragments.MainFragment
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.Marker
+import com.bisket.fragments.MapFragment
 
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,10 +53,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, MainFragment::class.qualifiedName!!))
             }
             R.id.map_menu -> {
-                val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as com.naver.maps.map.MapFragment?
-                    ?: com.naver.maps.map.MapFragment.newInstance()
-                replaceFragment(mapFragment)
-                mapFragment.getMapAsync(this)
+                replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, MapFragment::class.qualifiedName!!))
             }
             R.id.business_card_menu -> {
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, BusinessCardFragment::class.qualifiedName!!))
@@ -70,29 +63,4 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         return super.onOptionsItemSelected(item)
     }
 
-    @UiThread
-    override fun onMapReady(naverMap: NaverMap) {
-        /**
-         * UI 설정
-         */
-        val uiSettings = naverMap.uiSettings
-        uiSettings.isCompassEnabled = true
-        uiSettings.isLocationButtonEnabled = true
-
-        /**
-         * 마커 추가
-         */
-        val marker = Marker()
-        marker.position = LatLng(37.5670135, 126.9783740)
-        marker.map = naverMap
-
-        /**
-         * 클릭 시, 마커 이동
-         */
-        naverMap.setOnMapClickListener { point, coord ->
-//            Toast.makeText(this, "${coord.latitude}, ${coord.longitude}", Toast.LENGTH_SHORT).show()
-            marker.position = LatLng(coord.latitude, coord.longitude)
-        }
-
-    }
 }
