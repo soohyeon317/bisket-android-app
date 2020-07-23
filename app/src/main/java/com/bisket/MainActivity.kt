@@ -37,25 +37,29 @@ class MainActivity : AppCompatActivity() {
      * Fragment 전환 메소드
      */
     fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction
             .replace(R.id.content_layout, fragment)
             .commit()
+
+        transaction.addToBackStack(null) // 이전 화면으로 돌아갈 수 있게 하는 설정
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu1, menu)
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            android.R.id.home -> {
+            android.R.id.home -> { // 홈 메뉴 버튼
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, MainFragment::class.qualifiedName!!))
             }
-            R.id.map_menu -> {
+            R.id.map_menu -> { // 지도 메뉴 버튼
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, MapFragment::class.qualifiedName!!))
             }
-            R.id.business_card_menu -> {
+            R.id.business_card_menu -> { // 명함 메뉴 버튼
                 replaceFragment(supportFragmentManager.fragmentFactory.instantiate(classLoader, BusinessCardFragment::class.qualifiedName!!))
             }
         }
