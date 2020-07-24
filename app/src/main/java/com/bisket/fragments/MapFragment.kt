@@ -40,9 +40,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker.map = naverMap
 
         /**
-         * 클릭 시, 마커 이동
+         * 길게 클릭 시, 마커 이동
          */
-        naverMap.setOnMapClickListener { point, coord ->
+        naverMap.setOnMapLongClickListener { point, coord ->
 //            Toast.makeText(this, "${coord.latitude}, ${coord.longitude}", Toast.LENGTH_SHORT).show()
             marker.position = LatLng(coord.latitude, coord.longitude)
         }
