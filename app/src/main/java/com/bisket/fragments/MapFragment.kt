@@ -33,18 +33,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         uiSettings.isLocationButtonEnabled = true
 
         /**
-         * 마커 추가
+         * 롱클릭 이벤트 구현
          */
-        val marker = Marker()
-        marker.position = LatLng(37.5670135, 126.9783740)
-        marker.map = naverMap
-
-        /**
-         * 길게 클릭 시, 마커 이동
-         */
+        val marker = Marker() // 마커 선언
         naverMap.setOnMapLongClickListener { point, coord ->
 //            Toast.makeText(this, "${coord.latitude}, ${coord.longitude}", Toast.LENGTH_SHORT).show()
+            /*
+             * 마커 표시
+             */
             marker.position = LatLng(coord.latitude, coord.longitude)
+            marker.map = naverMap
         }
 
     }
