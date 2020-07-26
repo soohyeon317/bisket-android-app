@@ -2,4 +2,6 @@
     <string name="app_name">비스켓</string>
     <string name="map_menu_name">지도</string>
     <string name="business_card_menu_name">명함</string>
+    <string name="naver_open_api_client_id">ce89llz6q6</string>
+    <string name="naver_open_api_client_secret">dmhMftbBLmPRZMB3zJEoyu2BqGmVRrDgjazAzszp</string>
 </resources>

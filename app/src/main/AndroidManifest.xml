@@ -12,15 +12,16 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="ce89llz6q6" />
+            android:value="@string/naver_open_api_client_id"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
