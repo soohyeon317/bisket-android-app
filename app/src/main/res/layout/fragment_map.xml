@@ -16,10 +16,11 @@
         android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/sliding_up_pannel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|top"
-        android:text="The Awesome Sliding Up Panel"
+        android:text="@string/sliding_up_pannel_initial_text"
         android:textSize="16sp" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -1,6 +1,6 @@
 package com.bisket.naveropenapi
 
-import okhttp3.ResponseBody
+import com.bisket.dto.ReverseGeoCode.ReverseGeoCodeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -15,6 +15,6 @@ interface NaverOpenApiService {
         @Query("coords") coordinates: String? = null,
         @Query("orders") orders: String = "legalcode,admcode,addr,roadaddr",
         @Query("output") output: String = "json"
-    ): Call<ResponseBody>
+    ): Call<ReverseGeoCodeResponse>
 
 }

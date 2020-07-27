@@ -4,4 +4,5 @@
     <string name="business_card_menu_name">명함</string>
     <string name="naver_open_api_client_id">ce89llz6q6</string>
     <string name="naver_open_api_client_secret">dmhMftbBLmPRZMB3zJEoyu2BqGmVRrDgjazAzszp</string>
+    <string name="sliding_up_pannel_initial_text">길게 터치하여 지정한 위치 주변의 업체 목록 보기</string>
 </resources>
