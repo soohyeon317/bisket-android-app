@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar!!
         actionBar.setTitle(R.string.app_name)
         actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.setBackgroundDrawable(ColorDrawable(0xFF8B0000.toInt()))
+        actionBar.setBackgroundDrawable(ColorDrawable(0xFF4c0f0b.toInt()))
 
         /**
          * 화면 전환 Fragment 선언 및 초기 화면 설정
