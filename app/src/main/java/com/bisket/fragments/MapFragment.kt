@@ -76,26 +76,50 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                 val results = response.body()!!.results
                                 if (results != null) {
 //                                    Log.d(TAG, results.toString())
-                                    var partialAddress = "" // 업체 목록 검색 시에 사용할 주소값
-                                    var fullAddress = "" // 슬라이딩업패널에 뿌릴 주소값
+                                    var partialLandLotAddress = "" // 업체 목록 검색 시에 사용할 지번 주소값
+                                    var fullLandLotAddress = "" // 슬라이딩업패널에 뿌릴 지번 주소값
+                                    var partialRoadAddress = "" // 업체 목록 검색 시에 사용할 도로명 주소값
+                                    var fullRoadAddress = "" // 슬라이딩업패널에 뿌릴 도로명 주소값
                                     for (result in results) {
-                                        if (result.name == ReverseGeoCodeResultName.addr) { // addr(지번 주소) 형식만 취급
-                                            partialAddress =
-                                                "${result.region?.area1?.name} ${result.region?.area2?.name} ${result.region?.area3?.name}".trim()
-                                            fullAddress = TextUtils.concat(fullAddress, partialAddress).toString()
-                                            if (result.land != null) {
-                                                val land = result.land!!
-                                                if (!TextUtils.isEmpty(land.number1)) {
-                                                    fullAddress = TextUtils.concat(fullAddress, " ${land.number1!!}").toString()
-                                                    if (!TextUtils.isEmpty(land.number2)) {
-                                                        fullAddress = TextUtils.concat(fullAddress, "-${land.number2!!}").toString()
+                                        when(result.name) {
+                                            ReverseGeoCodeResultName.addr -> { // 지번 주소 형식인 경우
+                                                partialLandLotAddress =
+                                                    "${result.region?.area1?.name} ${result.region?.area2?.name} ${result.region?.area3?.name} ${result.region?.area4?.name}".trim()
+                                                fullLandLotAddress = TextUtils.concat(fullLandLotAddress, partialLandLotAddress).toString().trim()
+                                                if (result.land != null) {
+                                                    val land = result.land!!
+                                                    if (!TextUtils.isEmpty(land.number1)) {
+                                                        fullLandLotAddress = TextUtils.concat(fullLandLotAddress, " ${land.number1!!}").toString().trim()
+                                                        if (!TextUtils.isEmpty(land.number2)) {
+                                                            fullLandLotAddress = TextUtils.concat(fullLandLotAddress, "-${land.number2!!}").toString().trim()
+                                                        }
                                                     }
                                                 }
                                             }
+                                            ReverseGeoCodeResultName.roadaddr -> { // 도로명 주소 형식인 경우
+                                                partialRoadAddress =
+                                                    "${result.region?.area1?.name} ${result.region?.area2?.name} ${result.region?.area3?.name} ${result.region?.area4?.name}".trim()
+                                                fullRoadAddress = TextUtils.concat(fullRoadAddress, partialRoadAddress).toString().trim()
+                                                if (result.land != null) {
+                                                    val land = result.land!!
+                                                    if (!TextUtils.isEmpty(land.name)) {
+                                                        fullRoadAddress = TextUtils.concat(fullRoadAddress, " ${land.name!!}").toString().trim()
+                                                        if (!TextUtils.isEmpty(land.number1)) {
+                                                            fullRoadAddress = TextUtils.concat(fullRoadAddress, " ${land.number1!!}").toString().trim()
+                                                            if (!TextUtils.isEmpty(land.number2)) {
+                                                                fullRoadAddress = TextUtils.concat(fullRoadAddress, "-${land.number2!!}").toString().trim()
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else -> {}
                                         }
                                     }
-                                    val slidingUpPannel = view!!.findViewById<TextView>(R.id.sliding_up_pannel)
-                                    slidingUpPannel.text = fullAddress
+                                    val slidingUpPannelTextView1 = view!!.findViewById<TextView>(R.id.sliding_up_pannel_text_view_1)
+                                    val slidingUpPannelTextView2 = view!!.findViewById<TextView>(R.id.sliding_up_pannel_text_view_2)
+                                    slidingUpPannelTextView1.text = fullLandLotAddress.trim()
+                                    slidingUpPannelTextView2.text = fullRoadAddress.trim()
                                 }
 
                             }
