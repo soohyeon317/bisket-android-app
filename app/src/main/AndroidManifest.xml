@@ -22,6 +22,9 @@
         </activity>
     </application>
 
+    <!-- 인터넷 접속 허용 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 사용자 위치 정보에 대한 접근 허용 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

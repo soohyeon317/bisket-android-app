@@ -16,20 +16,29 @@ import com.bisket.dto.ReverseGeoCode.ReverseGeoCodeResultName
 import com.bisket.naveropenapi.NaverOpenApiClient
 import com.bisket.naveropenapi.NaverOpenApiService
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-    lateinit var clientId: String
-    lateinit var clentSecret: String
-    lateinit var retrofit: Retrofit
-    lateinit var naverOpenApiService: NaverOpenApiService
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+    }
+
+    private lateinit var clientId: String
+    private lateinit var clentSecret: String
+    private lateinit var retrofit: Retrofit
+    private lateinit var naverOpenApiService: NaverOpenApiService
+    private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_map, null)
@@ -40,6 +49,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         clentSecret = getString(R.string.naver_open_api_client_secret)
         retrofit = NaverOpenApiClient.getInstnace()
         naverOpenApiService = retrofit.create(NaverOpenApiService::class.java)
+
+        /*
+        FusedLocationSource는 런타임 권한 처리를 위해 액티비티 또는 프래그먼트를 필요로 합니다.
+        생성자에 액티비티나 프래그먼트 객체를 전달하고 권한 요청 코드를 지정해야 합니다.
+         */
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         return view
     }
@@ -52,6 +67,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val uiSettings = naverMap.uiSettings
         uiSettings.isCompassEnabled = true
         uiSettings.isLocationButtonEnabled = true
+
+        /**
+         * 위치 추적 기능 설정
+         */
+        this.naverMap = naverMap
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         /**
          * 롱클릭 이벤트 구현
@@ -133,7 +155,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
             }.run()
         }
+    }
 
+    /**
+     * onRequestPermissionResult()의 결과를 FusedLocationSource의 onRequestPermissionsResult()에 전달해야 합니다.
+     */
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
+                grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }
